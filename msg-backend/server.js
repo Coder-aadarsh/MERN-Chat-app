@@ -20,5 +20,5 @@ const io = require('socket.io')(server, {
 })
 
 server.listen(PORT, ()=>{
-    console.log('Server listening at port', PORT)
+    console.log('Server is working at port', PORT)
 })
