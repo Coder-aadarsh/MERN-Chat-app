@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express(); // instantiating express
+const userRoutes = require('./routes/userRoutes'); 
 
 const rooms = ['general', 'tech-room', 'memes', 'usefull-stuff'];
 const cors = require('cors');
@@ -7,6 +8,9 @@ const cors = require('cors');
 app.use(express.urlencoded({extended:true})); // to allow data to be recieved from frontend
 app.use(express.json());
 app.use(cors());  // to setup communication between front and back
+
+app.use('/users', userRoutes);
+require('./connection');
 
 //now setting server requestes
 const server = require('http').createServer(app);
