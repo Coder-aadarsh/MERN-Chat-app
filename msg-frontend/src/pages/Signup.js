@@ -3,14 +3,17 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Col, Row } from 'react-bootstrap';
 import './Signup.css';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import BotImg from '../assets/avatar.jpg';
+import {useSignupUserMutation} from "../services/appApi"; // its like a hook that gives us an object that gives us signup function with loading state
 
 
 function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const navigate = useNavigate();
+    const [signupUser, {isLoading, error}] = useSignupUserMutation();
 
     //image upload states
     const [image, setImage] = useState(null);
@@ -52,7 +55,13 @@ function Signup() {
         const url = await uploadImage(image);
         console.log(url);
         //Now signing up the user -
-
+        signupUser({name, email, password, picture: url}).then(({data})=>{
+            if(data){
+                console.log(data);
+                // navigate to chat
+                navigate("/chat");
+            };
+        })
     }
 
     return (

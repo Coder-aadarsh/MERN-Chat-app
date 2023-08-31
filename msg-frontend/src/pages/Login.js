@@ -3,15 +3,26 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Col, Row } from 'react-bootstrap';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
+import {useLoginUserMutation} from "../services/appApi";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const [loginUser, {isLoading, error}] = useLoginUserMutation();
 
     const handleLogin = (e) => {
         e.preventDefault();
         //login logic
+        loginUser({email,password}).then(({data})=>{
+            if(data) {
+                // we need socket work here
+                //navigate to chat
+                navigate("/chat");
+                // once we login we should not be able to login again so we will hide the some routes after that
+            }
+        });
     };
 
     return (
